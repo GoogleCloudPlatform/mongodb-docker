@@ -2,7 +2,6 @@ FROM {{ .From }}
 
 {{- $gosu := index .Packages "gosu" }}
 {{- $mongodb := index .Packages "mongodb" }}
-{{- $debian := index .Packages "debian" }}
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
@@ -40,7 +39,7 @@ ENV MONGO_MAJOR {{ $mongodb.Major }}
 ENV MONGO_VERSION {{ $mongodb.Version }}
 ENV MONGO_PACKAGE mongodb-org
 
-RUN echo "deb http://repo.mongodb.org/apt/debian {{ $debian.Version }}/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
+RUN echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
 
 RUN set -x \
 	&& apt-get update \

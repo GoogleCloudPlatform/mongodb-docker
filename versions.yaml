@@ -13,8 +13,6 @@ versions:
         version: 3.4.2
         major: 3.4
         gpg: 0C49F3730359A14518585931BC711F9BA15703C6
-      debian:
-        version: jessie
   - dir: 3.2
     repo: mongodb3
     tags:
@@ -26,18 +24,3 @@ versions:
         version: 3.2.12
         major: 3.2
         gpg: 42F3E95A2C4F08279C4960ADD68FA50FEA312927
-      debian:
-        version: jessie
-  - dir: 3.0
-    repo: mongodb3
-    tags:
-      - 3.0
-    from: debian:wheezy
-    packages:
-      gosu: *gosu
-      mongodb:
-        version: 3.0.14
-        major: 3.0
-        gpg: 492EAFE8CD016A07919F1D2B9ECBEC467F0CEB10
-      debian:
-        version: wheezy
