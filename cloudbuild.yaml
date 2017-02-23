@@ -1,0 +1,27 @@
+
+steps:
+
+# Build images
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - 'build'
+      - '--tag=gcr.io/$PROJECT_ID/mongodb3:3.4'
+      - '3.4'
+  - name: gcr.io/cloud-builders/docker
+    args:
+      - 'build'
+      - '--tag=gcr.io/$PROJECT_ID/mongodb3:3.2'
+      - '3.2'
+
+# Run tests
+
+# Add alias tags
+  - name: gcr.io/cloud-builders/retagger
+    args:
+      - 'gcr.io/$PROJECT_ID/mongodb3:3.4'
+      - 'gcr.io/$PROJECT_ID/mongodb3:latest'
+
+images:
+  - 'gcr.io/$PROJECT_ID/mongodb3:3.4'
+  - 'gcr.io/$PROJECT_ID/mongodb3:latest'
+  - 'gcr.io/$PROJECT_ID/mongodb3:3.2'
