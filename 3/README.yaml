@@ -1,0 +1,172 @@
+# Copyright (C) 2017 Google Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+# GNU Affero General Public License for more details.
+#
+# You should have received a copy of the GNU Affero General Public License
+# along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+# Used with http://github.com/GoogleCloudPlatform/runtimes-common/tree/master/docgen
+_templates:
+- &Image launcher.gcr.io/google/mongodb3
+- &PullCommand gcloud docker -- pull launcher.gcr.io/google/mongodb3
+- &ServiceArgs
+  name: mongo
+  image: *Image
+- &BaseServerRun
+  <<: *ServiceArgs
+  exposedPorts:
+  - port: 27017
+- &BaseClientRun
+  name: mongo-client
+  image: *Image
+  runType: INTERACTIVE_SHELL
+- &BaseExec
+  containerName: some-mongo
+  execType: INTERACTIVE_SHELL
+
+overview:
+  description: |-
+    This README explains how to launch MongoDB on Kubernetes and Docker.
+
+    For more information, see the
+    [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
+  dockerfileUrl: https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3
+  pullCommand: *PullCommand
+
+taskGroups:
+
+- title: Run a MongoDB server
+  description: This section describes how to spin up a MongoDB service using this image.
+  tasks:
+  - title: Start a MongoDB instance
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - run: *BaseServerRun
+    - description: The MongoDB server is accessible on port 27017.
+      applicableRuntimes: [DOCKER]
+    - description: >-
+        See [](#configurations) for how to customize your MongoDB
+        service instance.
+  - title: Use a persistent data volume
+    runtimes: [DOCKER, KUBERNETES]
+    anchorId: use-a-persistent-data-volume
+    instructions:
+    - description: >-
+        We can store MongoDB data on a persistent volume.
+        This way the database remains intact across restarts. Assume that
+        `/my/persistent/dir/mongo` is the persistent directory on the host.
+      applicableRuntimes: [DOCKER]
+    - description: >-
+        We can store MongoDB data on a persistent volume.
+        This way the database remains intact across restarts.
+      applicableRuntimes: [KUBERNETES]
+    - run:
+        <<: *BaseServerRun
+        volumes:
+        - name: data
+          path: /data/db
+          emptyPersistentVolume:
+            hostPath: /my/persistent/dir/mongo
+            subPath: data
+
+- title: Configurations
+  description: >-
+    See the [official docs](http://docs.mongodb.org/manual/)
+    for infomation on using and configuring
+    MongoDB for things like replica sets and sharding.
+  anchorId: configurations
+  tasks:
+  - title: Using flags
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: >-
+        Just add the `--storageEngine` argument if you want to use the
+        WiredTiger storage engine in MongoDB 3.0 and above without
+        making a config file. Be sure to check the
+        [docs](http://docs.mongodb.org/manual/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger)
+        on how to upgrade from older versions.
+      run:
+        <<: *BaseServerRun
+        arguments: ["--storageEngine wiredTiger"]
+    - description: >-
+        You can also list all available options (several pages long).
+      run:
+        <<: *BaseClientRun
+        runType: ONESHOT
+        arguments: ["--verbose", "--help"]
+  - title: Authentication and authorization
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: >-
+        MongoDB does not require authentication by default,
+        but it can be configured to do so. For more details about
+        the functionality described here, please see the sections
+        in the official documentation which describe
+        [authentication](https://docs.mongodb.org/manual/core/authentication/)
+        and [authorization](https://docs.mongodb.org/manual/core/authorization/)
+        in more detail.
+    - description: Start the Database.
+      run:
+        <<: *BaseServerRun
+        arguments: ["--auth"]
+    - description: >-
+        Add the initial admin user:
+      exec:
+        <<: *BaseExec
+        command: mongo admin
+        subcommands:
+        - description: Create a user `some-user` and set password as `some-pass`.
+          command: >-
+            db.createUser({
+              "user" : "some-user",
+              "pwd" : "some-pass",
+              "roles" : [
+                {
+                  "role" : "userAdminAnyDatabase",
+                  "db" : "admin"
+                }
+              ]
+            });
+
+- title: Mongo CLI
+  description: This section describes how to use this image as a MongoDB client.
+  tasks:
+  - title: Connect to a running MongoDB container
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: >-
+        You can run a MongoDB client directly within the container.
+      exec:
+        <<: *BaseExec
+        command: mongo
+  - title: Connect to a remote MongoDB server
+    runtimes: [DOCKER, KUBERNETES]
+    instructions:
+    - description: >-
+        Assume that we have a MongoDB server running at `some-host`.
+        We want to log on to `some-db` as `some-user` and password is `some-pass`.
+      run:
+        <<: *BaseClientRun
+        arguments:
+          - sh
+          - -c
+          - >-
+            'exec mongo some-host/some-db --username some-user --password some-pass --authenticationDatabase admin'
+
+portReference:
+  ports:
+  - port: '27017'
+    description: Standard MongoDB port.
+
+volumeReference:
+  volumes:
+  - path: /data/db
+    description: Stores the database files.

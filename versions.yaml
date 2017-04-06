@@ -14,7 +14,7 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 versions:
-  - dir: 3.4
+  - dir: 3/3.4
     repo: mongodb3
     tags:
       - 3.4
@@ -28,7 +28,7 @@ versions:
         version: 3.4.2
         major: 3.4
         gpg: 0C49F3730359A14518585931BC711F9BA15703C6
-  - dir: 3.2
+  - dir: 3/3.2
     repo: mongodb3
     tags:
       - 3.2
