@@ -1,6 +1,6 @@
 # <a name="about"></a>About
 
-This README explains how to launch MongoDB on Kubernetes and Docker.
+This image contains an installation of MongoDB 3.x.
 
 For more information, see the
 [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
@@ -10,7 +10,7 @@ Pull command:
 gcloud docker -- pull launcher.gcr.io/google/mongodb3
 ```
 
-Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3).
+Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3/3.4).
 
 # <a name="table-of-contents"></a>Table of Contents
 * [Using Kubernetes](#using-kubernetes)
@@ -64,6 +64,8 @@ Run the following to expose the port:
 kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
 ```
+
+For information about how to retain your database across restarts, see [Use a persistent data volume](#use-a-persistent-data-volume-kubernetes).
 
 See [Configurations](#configurations-kubernetes) for how to customize your MongoDB service instance.
 
@@ -156,7 +158,7 @@ kubectl run \
 
 MongoDB does not require authentication by default, but it can be configured to do so. For more details about the functionality described here, please see the sections in the official documentation which describe [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) in more detail.
 
-Start the Database.
+Start the Database with `--auth` flag.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
 ```yaml
@@ -180,7 +182,7 @@ kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
 ```
 
-Add the initial admin user:
+Open an admin CLI shell.
 
 ```shell
 kubectl exec -it some-mongo -- mongo admin
@@ -252,6 +254,8 @@ docker run \
 
 The MongoDB server is accessible on port 27017.
 
+For information about how to retain your database across restarts, see [Use a persistent data volume](#use-a-persistent-data-volume-docker).
+
 See [Configurations](#configurations-docker) for how to customize your MongoDB service instance.
 
 ### <a name="use-a-persistent-data-volume-docker"></a>Use a persistent data volume
@@ -320,7 +324,7 @@ docker run \
 
 MongoDB does not require authentication by default, but it can be configured to do so. For more details about the functionality described here, please see the sections in the official documentation which describe [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) in more detail.
 
-Start the Database.
+Start the Database with `--auth` flag.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
 ```yaml
@@ -342,7 +346,7 @@ docker run \
   --auth
 ```
 
-Add the initial admin user:
+Open an admin CLI shell.
 
 ```shell
 docker exec -it some-mongo mongo admin

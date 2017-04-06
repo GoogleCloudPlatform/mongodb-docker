@@ -29,16 +29,16 @@ _templates:
   image: *Image
   runType: INTERACTIVE_SHELL
 - &BaseExec
-  containerName: some-mongo
+  containerFromRun: *BaseServerRun
   execType: INTERACTIVE_SHELL
 
 overview:
   description: |-
-    This README explains how to launch MongoDB on Kubernetes and Docker.
+    This image contains an installation of MongoDB 3.x.
 
     For more information, see the
     [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
-  dockerfileUrl: https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3
+  dockerfileUrl: https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3/3.4
   pullCommand: *PullCommand
 
 taskGroups:
@@ -52,6 +52,9 @@ taskGroups:
     - run: *BaseServerRun
     - description: The MongoDB server is accessible on port 27017.
       applicableRuntimes: [DOCKER]
+    - description: >-
+        For information about how to retain your database across restarts, see
+        [](#use-a-persistent-data-volume).
     - description: >-
         See [](#configurations) for how to customize your MongoDB
         service instance.
@@ -113,12 +116,12 @@ taskGroups:
         [authentication](https://docs.mongodb.org/manual/core/authentication/)
         and [authorization](https://docs.mongodb.org/manual/core/authorization/)
         in more detail.
-    - description: Start the Database.
+    - description: Start the Database with `--auth` flag.
       run:
         <<: *BaseServerRun
         arguments: ["--auth"]
     - description: >-
-        Add the initial admin user:
+        Open an admin CLI shell.
       exec:
         <<: *BaseExec
         command: mongo admin
