@@ -1,0 +1,15 @@
+setup:
+- command: [docker, run, --privileged=true, --name, some-mongo, -d, '$IMAGE']
+- command: [sleep, 5s]
+
+teardown:
+- command: [docker, stop, some-mongo]
+- command: [docker, rm, some-mongo]
+
+target: some-mongo
+tests:
+- name: The current database connection
+  command: [mongo, --quiet, --eval, 'db.getMongo()']
+  expect:
+    stdout:
+      matches: ^connection to 127.0.0.1(:27017)?\s*$
