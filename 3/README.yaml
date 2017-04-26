@@ -91,11 +91,9 @@ taskGroups:
     runtimes: [DOCKER, KUBERNETES]
     instructions:
     - description: >-
-        Just add the `--storageEngine` argument if you want to use the
-        WiredTiger storage engine in MongoDB 3.0 and above without
-        making a config file. Be sure to check the
-        [docs](http://docs.mongodb.org/manual/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger)
-        on how to upgrade from older versions.
+        You can specify options directly to `mongod` when starting the instance.
+        For example, you can set `--storageEngine` to `wiredTiger` to enable
+        WiredTiger storage engine.
       run:
         <<: *BaseServerRun
         arguments: ["--storageEngine wiredTiger"]
@@ -110,14 +108,8 @@ taskGroups:
     instructions:
     - description: >-
         MongoDB does not require authentication by default,
-        but it can be configured to do so. For more details about
-        the functionality described here, please see the sections
-        in the official documentation which describe
-        [authentication](https://docs.mongodb.org/manual/core/authentication/)
-        and [authorization](https://docs.mongodb.org/manual/core/authorization/)
-        in more detail.
-    - description: Start the Database with `--auth` flag.
-      run:
+        but it can be configured to do so by using `--auth` option.
+    - run:
         <<: *BaseServerRun
         arguments: ["--auth"]
     - description: >-
@@ -138,6 +130,11 @@ taskGroups:
                 }
               ]
             });
+    - description: >-
+        For more information, see
+        [authentication](https://docs.mongodb.org/manual/core/authentication/)
+        and [authorization](https://docs.mongodb.org/manual/core/authorization/)
+        sections on the official MongoDB documentation.
 
 - title: Mongo CLI
   description: This section describes how to use this image as a MongoDB client.
@@ -155,7 +152,8 @@ taskGroups:
     instructions:
     - description: >-
         Assume that we have a MongoDB server running at `some-host`.
-        We want to log on to `some-db` as `some-user` and password is `some-pass`.
+        We want to log on to `some-db` as `some-user` with `some-pass` as the
+        password.
       run:
         <<: *BaseClientRun
         arguments:

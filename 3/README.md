@@ -120,7 +120,7 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 
 ### <a name="using-flags-kubernetes"></a>Using flags
 
-Just add the `--storageEngine` argument if you want to use the WiredTiger storage engine in MongoDB 3.0 and above without making a config file. Be sure to check the [docs](http://docs.mongodb.org/manual/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger) on how to upgrade from older versions.
+You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
 ```yaml
@@ -156,9 +156,7 @@ kubectl run \
 
 ### <a name="authentication-and-authorization-kubernetes"></a>Authentication and authorization
 
-MongoDB does not require authentication by default, but it can be configured to do so. For more details about the functionality described here, please see the sections in the official documentation which describe [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) in more detail.
-
-Start the Database with `--auth` flag.
+MongoDB does not require authentication by default, but it can be configured to do so by using `--auth` option.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
 ```yaml
@@ -202,6 +200,8 @@ db.createUser({
 });
 ```
 
+For more information, see [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) sections on the official MongoDB documentation.
+
 ## <a name="mongo-cli-kubernetes"></a>Mongo CLI
 
 This section describes how to use this image as a MongoDB client.
@@ -216,7 +216,7 @@ kubectl exec -it some-mongo -- mongo
 
 ### <a name="connect-to-a-remote-mongodb-server-kubernetes"></a>Connect to a remote MongoDB server
 
-Assume that we have a MongoDB server running at `some-host`. We want to log on to `some-db` as `some-user` and password is `some-pass`.
+Assume that we have a MongoDB server running at `some-host`. We want to log on to `some-db` as `some-user` with `some-pass` as the password.
 
 ```shell
 kubectl run \
@@ -240,6 +240,7 @@ Use the following content for the `docker-compose.yml` file, then run `docker-co
 version: '2'
 services:
   mongo:
+    container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3
 ```
 
@@ -267,6 +268,7 @@ Use the following content for the `docker-compose.yml` file, then run `docker-co
 version: '2'
 services:
   mongo:
+    container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3
     volumes:
       - /my/persistent/dir/mongo:/data/db
@@ -288,13 +290,14 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 
 ### <a name="using-flags-docker"></a>Using flags
 
-Just add the `--storageEngine` argument if you want to use the WiredTiger storage engine in MongoDB 3.0 and above without making a config file. Be sure to check the [docs](http://docs.mongodb.org/manual/release-notes/3.0-upgrade/#change-storage-engine-to-wiredtiger) on how to upgrade from older versions.
+You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
 ```yaml
 version: '2'
 services:
   mongo:
+    container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3 \
     command:
       - --storageEngine wiredTiger
@@ -322,15 +325,14 @@ docker run \
 
 ### <a name="authentication-and-authorization-docker"></a>Authentication and authorization
 
-MongoDB does not require authentication by default, but it can be configured to do so. For more details about the functionality described here, please see the sections in the official documentation which describe [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) in more detail.
-
-Start the Database with `--auth` flag.
+MongoDB does not require authentication by default, but it can be configured to do so by using `--auth` option.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
 ```yaml
 version: '2'
 services:
   mongo:
+    container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3 \
     command:
       - --auth
@@ -366,6 +368,8 @@ db.createUser({
 });
 ```
 
+For more information, see [authentication](https://docs.mongodb.org/manual/core/authentication/) and [authorization](https://docs.mongodb.org/manual/core/authorization/) sections on the official MongoDB documentation.
+
 ## <a name="mongo-cli-docker"></a>Mongo CLI
 
 This section describes how to use this image as a MongoDB client.
@@ -380,7 +384,7 @@ docker exec -it some-mongo mongo
 
 ### <a name="connect-to-a-remote-mongodb-server-docker"></a>Connect to a remote MongoDB server
 
-Assume that we have a MongoDB server running at `some-host`. We want to log on to `some-db` as `some-user` and password is `some-pass`.
+Assume that we have a MongoDB server running at `some-host`. We want to log on to `some-db` as `some-user` with `some-pass` as the password.
 
 ```shell
 docker run \
