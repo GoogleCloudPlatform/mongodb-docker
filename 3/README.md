@@ -6,6 +6,7 @@ For more information, see the
 [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
 
 Pull command:
+
 ```shell
 gcloud docker -- pull launcher.gcr.io/google/mongodb3
 ```
@@ -46,6 +47,7 @@ This section describes how to spin up a MongoDB service using this image.
 ### <a name="start-a-mongodb-instance-kubernetes"></a>Start a MongoDB instance
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -60,6 +62,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
@@ -74,6 +77,7 @@ See [Configurations](#configurations-kubernetes) for how to customize your Mongo
 We can store MongoDB data on a persistent volume. This way the database remains intact across restarts.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -109,6 +113,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
@@ -123,6 +128,7 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -139,6 +145,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
@@ -159,6 +166,7 @@ kubectl run \
 MongoDB does not require authentication by default, but it can be configured to do so by using `--auth` option.
 
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
+
 ```yaml
 apiVersion: v1
 kind: Pod
@@ -175,6 +183,7 @@ spec:
 ```
 
 Run the following to expose the port:
+
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
   --type LoadBalancer --port 27017 --protocol TCP
@@ -187,6 +196,7 @@ kubectl exec -it some-mongo -- mongo admin
 ```
 
 Create a user `some-user` and set password as `some-pass`.
+
 ```
 db.createUser({
   "user" : "some-user",
@@ -236,6 +246,7 @@ This section describes how to spin up a MongoDB service using this image.
 ### <a name="start-a-mongodb-instance-docker"></a>Start a MongoDB instance
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -264,6 +275,7 @@ See [Configurations](#configurations-docker) for how to customize your MongoDB s
 We can store MongoDB data on a persistent volume. This way the database remains intact across restarts. Assume that `/my/persistent/dir/mongo` is the persistent directory on the host.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -293,6 +305,7 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -328,6 +341,7 @@ docker run \
 MongoDB does not require authentication by default, but it can be configured to do so by using `--auth` option.
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
+
 ```yaml
 version: '2'
 services:
@@ -355,6 +369,7 @@ docker exec -it some-mongo mongo admin
 ```
 
 Create a user `some-user` and set password as `some-pass`.
+
 ```
 db.createUser({
   "user" : "some-user",
