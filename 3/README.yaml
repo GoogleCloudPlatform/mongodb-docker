@@ -38,7 +38,7 @@ overview:
 
     For more information, see the
     [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
-  dockerfileUrl: https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3/3.4
+  dockerfileUrl: https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3
   pullCommand: *PullCommand
 
 taskGroups:

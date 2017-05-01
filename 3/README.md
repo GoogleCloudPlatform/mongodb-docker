@@ -10,7 +10,7 @@ Pull command:
 gcloud docker -- pull launcher.gcr.io/google/mongodb3
 ```
 
-Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3/3.4).
+Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlatform/mongodb-docker/tree/master/3).
 
 # <a name="table-of-contents"></a>Table of Contents
 * [Using Kubernetes](#using-kubernetes)
