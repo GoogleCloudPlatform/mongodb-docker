@@ -14,28 +14,30 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 versions:
-  - dir: 3/3.4
+  - dir: '3/3.4'
     repo: mongodb3
     tags:
-      - 3.4
+      - '3.4'
+      - '3.4.5'
       - latest
     from: &from gcr.io/google-appengine/debian8
     packages:
       gosu: &gosu
-        version: 1.7
+        version: '1.7'
         gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       mongodb:
-        version: 3.4.2
-        major: 3.4
+        version: '3.4.5'
+        major: '3.4'
         gpg: 0C49F3730359A14518585931BC711F9BA15703C6
-  - dir: 3/3.2
+  - dir: '3/3.2'
     repo: mongodb3
     tags:
-      - 3.2
+      - '3.2'
+      - '3.2.14'
     from: *from
     packages:
       gosu: *gosu
       mongodb:
-        version: 3.2.12
-        major: 3.2
+        version: '3.2.14'
+        major: '3.2'
         gpg: 42F3E95A2C4F08279C4960ADD68FA50FEA312927
