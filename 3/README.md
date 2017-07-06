@@ -253,6 +253,8 @@ services:
   mongo:
     container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3
+    ports:
+      - '27017:27017'
 ```
 
 Or you can use `docker run` directly:
@@ -260,6 +262,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-mongo \
+  -p 27017:27017 \
   -d \
   launcher.gcr.io/google/mongodb3
 ```
@@ -282,6 +285,8 @@ services:
   mongo:
     container_name: some-mongo
     image: launcher.gcr.io/google/mongodb3
+    ports:
+      - '27017:27017'
     volumes:
       - /my/persistent/dir/mongo:/data/db
 ```
@@ -291,6 +296,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-mongo \
+  -p 27017:27017 \
   -v /my/persistent/dir/mongo:/data/db \
   -d \
   launcher.gcr.io/google/mongodb3
@@ -314,6 +320,8 @@ services:
     image: launcher.gcr.io/google/mongodb3 \
     command:
       - --storageEngine wiredTiger
+    ports:
+      - '27017:27017'
 ```
 
 Or you can use `docker run` directly:
@@ -321,6 +329,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-mongo \
+  -p 27017:27017 \
   -d \
   launcher.gcr.io/google/mongodb3 \
   --storageEngine wiredTiger
@@ -350,6 +359,8 @@ services:
     image: launcher.gcr.io/google/mongodb3 \
     command:
       - --auth
+    ports:
+      - '27017:27017'
 ```
 
 Or you can use `docker run` directly:
@@ -357,6 +368,7 @@ Or you can use `docker run` directly:
 ```shell
 docker run \
   --name some-mongo \
+  -p 27017:27017 \
   -d \
   launcher.gcr.io/google/mongodb3 \
   --auth
