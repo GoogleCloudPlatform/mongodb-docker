@@ -5,7 +5,7 @@ This image contains an installation of MongoDB 3.x.
 For more information, see the
 [Official Image Launcher Page](https://console.cloud.google.com/launcher/details/google/mongodb3).
 
-Pull command:
+Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
 
 ```shell
 gcloud docker -- pull launcher.gcr.io/google/mongodb3
@@ -40,6 +40,9 @@ Dockerfile for this image can be found [here](https://github.com/GoogleCloudPlat
 
 # <a name="using-kubernetes"></a>Using Kubernetes
 
+Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+for additional information about setting up your Kubernetes environment.
+
 ## <a name="run-a-mongodb-server-kubernetes"></a>Run a MongoDB server
 
 This section describes how to spin up a MongoDB service using this image.
@@ -61,7 +64,10 @@ spec:
       name: mongo
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
@@ -112,7 +118,10 @@ spec:
       storage: 5Gi
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
@@ -144,7 +153,10 @@ spec:
         - --storageEngine wiredTiger
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
@@ -182,7 +194,10 @@ spec:
         - --auth
 ```
 
-Run the following to expose the port:
+Run the following to expose the port.
+Depending on your cluster setup, this might expose your service to the
+Internet with an external IP address. For more information, consult
+[Kubernetes documentation](https://kubernetes.io/docs/concepts/services-networking/connect-applications-service/).
 
 ```shell
 kubectl expose pod some-mongo --name some-mongo-27017 \
@@ -238,6 +253,9 @@ kubectl run \
 ```
 
 # <a name="using-docker"></a>Using Docker
+
+Consult [Launcher container documentation](https://cloud.google.com/launcher/docs/launcher-container)
+for additional information about setting up your Docker environment.
 
 ## <a name="run-a-mongodb-server-docker"></a>Run a MongoDB server
 
