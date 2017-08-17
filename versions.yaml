@@ -13,31 +13,38 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+_variables:
+  from: &from gcr.io/google-appengine/debian8
+  gosu: &gosu
+    version: '1.10'
+    gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+  gpg32: &gpg32 42F3E95A2C4F08279C4960ADD68FA50FEA312927
+  gpg34: &gpg34 0C49F3730359A14518585931BC711F9BA15703C6
+
 versions:
   - dir: '3/3.4'
     repo: mongodb3
     tags:
-      - '3.4'
       - '3.4.7'
-      - latest
-    from: &from gcr.io/google-appengine/debian8
-    packages:
-      gosu: &gosu
-        version: '1.7'
-        gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-      mongodb:
-        version: '3.4.7'
-        major: '3.4'
-        gpg: 0C49F3730359A14518585931BC711F9BA15703C6
-  - dir: '3/3.2'
-    repo: mongodb3
-    tags:
-      - '3.2'
-      - '3.2.16'
+      - '3.4'
+      - '3'
+      - 'latest'
     from: *from
     packages:
       gosu: *gosu
       mongodb:
-        version: '3.2.16'
+        gpg: *gpg34
+        major: '3.4'
+        version: '3.4.7'
+  - dir: '3/3.2'
+    repo: mongodb3
+    tags:
+      - '3.2.16'
+      - '3.2'
+    from: *from
+    packages:
+      gosu: *gosu
+      mongodb:
+        gpg: *gpg32
         major: '3.2'
-        gpg: 42F3E95A2C4F08279C4960ADD68FA50FEA312927
+        version: '3.2.16'
