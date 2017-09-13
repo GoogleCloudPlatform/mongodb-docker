@@ -25,9 +25,8 @@ versions:
   - dir: '3/3.4'
     repo: mongodb3
     tags:
-      - '3.4.8'
+      - '3.4.9'
       - '3.4'
-      - '3'
       - 'latest'
     from: *from
     packages:
@@ -35,7 +34,7 @@ versions:
       mongodb:
         gpg: *gpg34
         major: '3.4'
-        version: '3.4.8'
+        version: '3.4.9'
   - dir: '3/3.2'
     repo: mongodb3
     tags:
