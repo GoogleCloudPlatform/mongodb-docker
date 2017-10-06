@@ -1,9 +1,5 @@
 FROM gcr.io/google-appengine/debian8
 
-# Get the list of packages from the base image.
-COPY download_source /tmp
-RUN /tmp/download_source blacklist-all-current
-
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 
@@ -67,7 +63,3 @@ ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 27017
 CMD ["mongod"]
 
-# Download source code for GPL packages.
-RUN /tmp/download_source exclude-sources /etc/apt/sources.list.d/mongodb-org.list \
-	&& /tmp/download_source download /usr/local/src \
-	&& rm /tmp/download_source

@@ -1,9 +1,5 @@
 FROM {{ .From }}
 
-# Get the list of packages from the base image.
-COPY download_source /tmp
-RUN /tmp/download_source blacklist-all-current
-
 {{- $gosu := index .Packages "gosu" }}
 {{- $mongodb := index .Packages "mongodb" }}
 
@@ -70,7 +66,3 @@ ENTRYPOINT ["/entrypoint.sh"]
 EXPOSE 27017
 CMD ["mongod"]
 
-# Download source code for GPL packages.
-RUN /tmp/download_source exclude-sources /etc/apt/sources.list.d/mongodb-org.list \
-	&& /tmp/download_source download /usr/local/src \
-	&& rm /tmp/download_source
