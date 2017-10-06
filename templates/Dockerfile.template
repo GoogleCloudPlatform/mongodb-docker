@@ -1,7 +1,5 @@
 FROM {{ .From }}
 
-# Get the list of packages from the base image.
-
 {{- $gosu := index .Packages "gosu" }}
 {{- $mongodb := index .Packages "mongodb" }}
 
