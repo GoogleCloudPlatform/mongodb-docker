@@ -38,7 +38,7 @@ versions:
   - dir: '3/3.2'
     repo: mongodb3
     tags:
-      - '3.2.17'
+      - '3.2.18'
       - '3.2'
     from: *from
     packages:
@@ -46,4 +46,4 @@ versions:
       mongodb:
         gpg: *gpg32
         major: '3.2'
-        version: '3.2.17'
+        version: '3.2.18'
