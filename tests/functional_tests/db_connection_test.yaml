@@ -14,14 +14,14 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 setup:
-- command: [docker, run, --privileged=true, --name, some-mongo, -d, '$IMAGE']
+- command: [docker, run, --privileged=true, --name, some-mongo-$UNIQUE-id, -d, '$IMAGE']
 - command: [sleep, 5s]
 
 teardown:
-- command: [docker, stop, some-mongo]
-- command: [docker, rm, some-mongo]
+- command: [docker, stop, some-mongo-$UNIQUE-id]
+- command: [docker, rm, some-mongo-$UNIQUE-id]
 
-target: some-mongo
+target: some-mongo-$UNIQUE-id
 tests:
 - name: The current database connection
   command: [mongo, --quiet, --eval, 'db.getMongo()']
