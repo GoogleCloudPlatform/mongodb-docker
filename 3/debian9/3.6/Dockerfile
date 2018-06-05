@@ -1,7 +1,4 @@
-FROM {{ .From }}
-
-{{- $gosu := index .Packages "gosu" }}
-{{- $mongodb := index .Packages "mongodb" }}
+FROM gcr.io/google-appengine/debian9:latest
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
@@ -14,8 +11,8 @@ RUN apt-get update \
 	&& rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
-ENV GOSU_VERSION {{ $gosu.Version }}
-ENV GOSU_GPG {{ $gosu.Gpg }}
+ENV GOSU_VERSION 1.10
+ENV GOSU_GPG B42F6819007F00F88E364FD4036A9C25BF357DD4
 
 RUN set -x \
 	&& apt-get update && apt-get install -y --no-install-recommends ca-certificates wget && rm -rf /var/lib/apt/lists/* \
@@ -25,25 +22,53 @@ RUN set -x \
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
 	&& export GNUPGHOME="$(mktemp -d)" \
-	&& {{ `gpg --keyserver $server --recv-keys $GOSU_GPG` | KeyServersRetryLoop "\t" }} \
+	&& found='' && \
+	for server in \
+		pool.sks-keyservers.net \
+		na.pool.sks-keyservers.net \
+		eu.pool.sks-keyservers.net \
+		oc.pool.sks-keyservers.net \
+		ha.pool.sks-keyservers.net \
+		hkp://p80.pool.sks-keyservers.net:80 \
+		hkp://keyserver.ubuntu.com:80 \
+		pgp.mit.edu \
+	; do \
+		gpg --keyserver $server --recv-keys $GOSU_GPG \
+			&& found=yes && break; \
+	done; \
+	test -n "$found" \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
 	&& rm -r -f "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
 
-ENV GPG_KEYS {{ $mongodb.Gpg }}
+ENV GPG_KEYS 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
-	{{ `gpg --keyserver $server --recv-keys $key` | KeyServersRetryLoop "\t" }} \
+	found='' && \
+	for server in \
+		pool.sks-keyservers.net \
+		na.pool.sks-keyservers.net \
+		eu.pool.sks-keyservers.net \
+		oc.pool.sks-keyservers.net \
+		ha.pool.sks-keyservers.net \
+		hkp://p80.pool.sks-keyservers.net:80 \
+		hkp://keyserver.ubuntu.com:80 \
+		pgp.mit.edu \
+	; do \
+		gpg --keyserver $server --recv-keys $key \
+			&& found=yes && break; \
+	done; \
+	test -n "$found" \
 	; done; \
 	gpg --export $GPG_KEYS > /etc/apt/trusted.gpg.d/mongodb.gpg; \
 	rm -r -f "$GNUPGHOME"; \
 	apt-key list
 
-ENV MONGO_MAJOR {{ $mongodb.Major }}
-ENV MONGO_VERSION {{ $mongodb.Version }}
+ENV MONGO_MAJOR 3.6
+ENV MONGO_VERSION 3.6.5
 ENV MONGO_PACKAGE mongodb-org
 
 RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \

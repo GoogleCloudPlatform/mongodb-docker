@@ -14,33 +14,46 @@
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 _variables:
-  from: &from gcr.io/google-appengine/debian8
+  from9: &from9 gcr.io/google-appengine/debian9:latest
+  from8: &from8 gcr.io/google-appengine/debian8:latest
   gosu: &gosu
     version: '1.10'
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
   gpg32: &gpg32 42F3E95A2C4F08279C4960ADD68FA50FEA312927
   gpg34: &gpg34 0C49F3730359A14518585931BC711F9BA15703C6
-
+  gpg36: &gpg36 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
 versions:
-  - dir: '3/3.4'
+  - dir: '3/debian9/3.6'
+    repo: mongodb3
+    tags:
+      - '3.6.5'
+      - '3.6'
+      - 'latest'
+    from: *from9
+    packages:
+      gosu: *gosu
+      mongodb:
+        gpg: *gpg36
+        major: '3.6'
+        version: '3.6.5'
+  - dir: '3/debian8/3.4'
     repo: mongodb3
     tags:
       - '3.4.15'
       - '3.4'
-      - 'latest'
-    from: *from
+    from: *from8
     packages:
       gosu: *gosu
       mongodb:
         gpg: *gpg34
         major: '3.4'
         version: '3.4.15'
-  - dir: '3/3.2'
+  - dir: '3/debian8/3.2'
     repo: mongodb3
     tags:
       - '3.2.20'
       - '3.2'
-    from: *from
+    from: *from8
     packages:
       gosu: *gosu
       mongodb:
