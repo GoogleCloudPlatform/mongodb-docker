@@ -26,8 +26,8 @@ versions:
   - dir: '3/debian9/3.6'
     repo: mongodb3
     tags:
-      - '3.6.5'
-      - '3.6'
+      - '3.6.5-debian9'
+      - '3.6-debian9'
       - 'latest'
     from: *from9
     packages:
@@ -39,8 +39,8 @@ versions:
   - dir: '3/debian8/3.4'
     repo: mongodb3
     tags:
-      - '3.4.15'
-      - '3.4'
+      - '3.4.15-debian8'
+      - '3.4-debian8'
     from: *from8
     packages:
       gosu: *gosu
@@ -51,8 +51,8 @@ versions:
   - dir: '3/debian8/3.2'
     repo: mongodb3
     tags:
-      - '3.2.20'
-      - '3.2'
+      - '3.2.20-debian8'
+      - '3.2-debian8'
     from: *from8
     packages:
       gosu: *gosu
