@@ -1,4 +1,4 @@
-FROM gcr.io/google-appengine/debian8
+FROM gcr.io/google-appengine/debian8:latest
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
@@ -6,6 +6,8 @@ RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		numactl \
+		gnupg \
+		dirmngr \
 	&& rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
@@ -36,12 +38,12 @@ RUN set -x \
 	done; \
 	test -n "$found" \
 	&& gpg --batch --verify /usr/local/bin/gosu.asc /usr/local/bin/gosu \
-	&& rm -r "$GNUPGHOME" /usr/local/bin/gosu.asc \
+	&& rm -r -f "$GNUPGHOME" /usr/local/bin/gosu.asc \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
 
-ENV GPG_KEYS 0C49F3730359A14518585931BC711F9BA15703C6
+ENV GPG_KEYS 42F3E95A2C4F08279C4960ADD68FA50FEA312927
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
@@ -62,14 +64,15 @@ RUN set -ex; \
 	test -n "$found" \
 	; done; \
 	gpg --export $GPG_KEYS > /etc/apt/trusted.gpg.d/mongodb.gpg; \
-	rm -r "$GNUPGHOME"; \
+	rm -r -f "$GNUPGHOME"; \
 	apt-key list
 
-ENV MONGO_MAJOR 3.4
-ENV MONGO_VERSION 3.4.15
+ENV MONGO_MAJOR 3.2
+ENV MONGO_VERSION 3.2.20
 ENV MONGO_PACKAGE mongodb-org
 
-RUN echo "deb http://repo.mongodb.org/apt/debian jessie/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
+RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \
+    && echo "deb http://repo.mongodb.org/apt/debian $DEBIAN_RELASE/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
 
 RUN set -x \
 	&& apt-get update \
