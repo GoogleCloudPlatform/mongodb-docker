@@ -22,14 +22,17 @@ _variables:
   gpg32: &gpg32 42F3E95A2C4F08279C4960ADD68FA50FEA312927
   gpg34: &gpg34 0C49F3730359A14518585931BC711F9BA15703C6
   gpg36: &gpg36 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+
 versions:
   - dir: '3/debian9/3.6'
     repo: mongodb3
     tags:
-      - '3.6.5-debian9'
+      - '3.6.6-debian9'
       - '3.6-debian9'
-      - '3.6.5'
+      - '3-debian9'
+      - '3.6.6'
       - '3.6'
+      - '3'
       - 'latest'
     from: *from9
     packages:
@@ -37,13 +40,13 @@ versions:
       mongodb:
         gpg: *gpg36
         major: '3.6'
-        version: '3.6.5'
+        version: '3.6.6'
   - dir: '3/debian8/3.4'
     repo: mongodb3
     tags:
-      - '3.4.15-debian8'
+      - '3.4.16-debian8'
       - '3.4-debian8'
-      - '3.4.15'
+      - '3.4.16'
       - '3.4'
     from: *from8
     packages:
@@ -51,7 +54,7 @@ versions:
       mongodb:
         gpg: *gpg34
         major: '3.4'
-        version: '3.4.15'
+        version: '3.4.16'
   - dir: '3/debian8/3.2'
     repo: mongodb3
     tags:
