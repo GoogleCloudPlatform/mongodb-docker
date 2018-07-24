@@ -68,7 +68,7 @@ RUN set -ex; \
 	apt-key list
 
 ENV MONGO_MAJOR 3.6
-ENV MONGO_VERSION 3.6.5
+ENV MONGO_VERSION 3.6.6
 ENV MONGO_PACKAGE mongodb-org
 
 RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \
