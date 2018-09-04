@@ -62,6 +62,9 @@ spec:
   containers:
     - image: launcher.gcr.io/google/mongodb3
       name: mongo
+      args:
+        - --bind_ip
+        - 0.0.0.0
 ```
 
 Run the following to expose the port.
@@ -95,6 +98,9 @@ spec:
   containers:
     - image: launcher.gcr.io/google/mongodb3
       name: mongo
+      args:
+        - --bind_ip
+        - 0.0.0.0
       volumeMounts:
         - name: data
           mountPath: /data/db
@@ -150,6 +156,8 @@ spec:
     - image: launcher.gcr.io/google/mongodb3
       name: mongo
       args:
+        - --bind_ip
+        - 0.0.0.0
         - --storageEngine wiredTiger
 ```
 
@@ -191,6 +199,8 @@ spec:
     - image: launcher.gcr.io/google/mongodb3
       name: mongo
       args:
+        - --bind_ip
+        - 0.0.0.0
         - --auth
 ```
 
