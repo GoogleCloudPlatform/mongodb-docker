@@ -44,9 +44,9 @@ versions:
   - dir: '3/debian8/3.4'
     repo: mongodb3
     tags:
-      - '3.4.16-debian8'
+      - '3.4.17-debian8'
       - '3.4-debian8'
-      - '3.4.16'
+      - '3.4.17'
       - '3.4'
     from: *from8
     packages:
@@ -54,13 +54,13 @@ versions:
       mongodb:
         gpg: *gpg34
         major: '3.4'
-        version: '3.4.16'
+        version: '3.4.17'
   - dir: '3/debian8/3.2'
     repo: mongodb3
     tags:
-      - '3.2.20-debian8'
+      - '3.2.21-debian8'
       - '3.2-debian8'
-      - '3.2.20'
+      - '3.2.21'
       - '3.2'
     from: *from8
     packages:
@@ -68,7 +68,7 @@ versions:
       mongodb:
         gpg: *gpg32
         major: '3.2'
-        version: '3.2.20'
+        version: '3.2.21'
 
 cloudbuild:
   enable_parallel: true
