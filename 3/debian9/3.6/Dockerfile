@@ -2,7 +2,6 @@ FROM gcr.io/google-appengine/debian9:latest
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
-
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		numactl \
@@ -91,6 +90,8 @@ RUN mkdir -p /data/db /data/configdb \
 VOLUME /data/db /data/configdb
 
 COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 27017

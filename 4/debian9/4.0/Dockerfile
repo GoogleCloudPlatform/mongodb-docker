@@ -1,13 +1,14 @@
-FROM gcr.io/google-appengine/debian8:latest
+FROM gcr.io/google-appengine/debian9:latest
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-		numactl \
-		gnupg \
-		dirmngr \
-	&& rm -rf /var/lib/apt/lists/*
+    && apt-get install -y --no-install-recommends \
+        gnupg dirmngr \
+        jq \
+        numactl \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.10
@@ -41,8 +42,9 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
+RUN mkdir /docker-entrypoint-initdb.d
 
-ENV GPG_KEYS 42F3E95A2C4F08279C4960ADD68FA50FEA312927
+ENV GPG_KEYS 9DA31620334BD75D9DCB49F368818C72E52529D4
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
@@ -66,8 +68,8 @@ RUN set -ex; \
 	rm -r -f "$GNUPGHOME"; \
 	apt-key list
 
-ENV MONGO_MAJOR 3.2
-ENV MONGO_VERSION 3.2.21
+ENV MONGO_MAJOR 4.0
+ENV MONGO_VERSION 4.0.2
 ENV MONGO_PACKAGE mongodb-org
 
 RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \
@@ -91,6 +93,14 @@ VOLUME /data/db /data/configdb
 
 COPY docker-entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
+RUN set -ex \
+    && apt-get update \
+    && apt-get -y install git \
+    && cd /usr/src \
+    && git clone https://github.com/mongodb/mongo.git \
+    && tar czf mongo.tgz mongo \
+    && rm -r mongo \
+    && apt-get remove -y git
 
 ENTRYPOINT ["/entrypoint.sh"]
 

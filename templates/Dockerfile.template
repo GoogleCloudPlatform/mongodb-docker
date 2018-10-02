@@ -1,3 +1,5 @@
+{{- $mongo4 := eq .Dir "4/debian9/4.0" -}}
+
 FROM {{ .From }}
 
 {{- $gosu := index .Packages "gosu" }}
@@ -6,12 +8,22 @@ FROM {{ .From }}
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 
+{{- if $mongo4 }}
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        gnupg dirmngr \
+        jq \
+        numactl \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
+{{- else }}
 RUN apt-get update \
 	&& apt-get install -y --no-install-recommends \
 		numactl \
 		gnupg \
 		dirmngr \
 	&& rm -rf /var/lib/apt/lists/*
+{{- end}}
 
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION {{ $gosu.Version }}
@@ -31,6 +43,10 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
+
+{{- if $mongo4 }}
+RUN mkdir /docker-entrypoint-initdb.d
+{{- end}}
 
 ENV GPG_KEYS {{ $mongodb.Gpg }}
 RUN set -ex; \
@@ -66,6 +82,19 @@ RUN mkdir -p /data/db /data/configdb \
 VOLUME /data/db /data/configdb
 
 COPY docker-entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+{{- if $mongo4 }}
+RUN set -ex \
+    && apt-get update \
+    && apt-get -y install git \
+    && cd /usr/src \
+    && git clone https://github.com/mongodb/mongo.git \
+    && tar czf mongo.tgz mongo \
+    && rm -r mongo \
+    && apt-get remove -y git
+{{- end}}
+
 ENTRYPOINT ["/entrypoint.sh"]
 
 EXPOSE 27017
