@@ -3,11 +3,12 @@ FROM gcr.io/google-appengine/debian9:latest
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
 RUN apt-get update \
-	&& apt-get install -y --no-install-recommends \
-		numactl \
-		gnupg \
-		dirmngr \
-	&& rm -rf /var/lib/apt/lists/*
+    && apt-get install -y --no-install-recommends \
+        gnupg dirmngr \
+        jq \
+        numactl \
+        curl \
+    && rm -rf /var/lib/apt/lists/*
 
 # grab gosu for easy step-down from root
 ENV GOSU_VERSION 1.10
@@ -41,6 +42,7 @@ RUN set -x \
 	&& chmod +x /usr/local/bin/gosu \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
+RUN mkdir /docker-entrypoint-initdb.d
 
 ENV GPG_KEYS 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
 RUN set -ex; \
@@ -90,7 +92,14 @@ RUN mkdir -p /data/db /data/configdb \
 VOLUME /data/db /data/configdb
 
 COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
+RUN set -ex \
+    && apt-get update \
+    && apt-get -y install git \
+    && cd /usr/src \
+    && git clone https://github.com/mongodb/mongo.git \
+    && tar czf mongo.tgz mongo \
+    && rm -r mongo \
+    && apt-get remove -y git
 
 ENTRYPOINT ["/entrypoint.sh"]
 

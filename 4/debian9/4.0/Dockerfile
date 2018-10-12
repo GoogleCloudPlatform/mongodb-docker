@@ -69,7 +69,7 @@ RUN set -ex; \
 	apt-key list
 
 ENV MONGO_MAJOR 4.0
-ENV MONGO_VERSION 4.0.2
+ENV MONGO_VERSION 4.0.3
 ENV MONGO_PACKAGE mongodb-org
 
 RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \
@@ -92,7 +92,6 @@ RUN mkdir -p /data/db /data/configdb \
 VOLUME /data/db /data/configdb
 
 COPY docker-entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
 RUN set -ex \
     && apt-get update \
     && apt-get -y install git \

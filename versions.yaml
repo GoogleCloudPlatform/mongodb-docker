@@ -27,11 +27,13 @@ _variables:
 versions:
   - dir: '4/debian9/4.0'
     repo: mongodb4
+    templateArgs:
+      os_ver: '9'
     tags:
-      - '4.0.2-debian9'
+      - '4.0.3-debian9'
       - '4.0-debian9'
       - '4-debian9'
-      - '4.0.2'
+      - '4.0.3'
       - '4.0'
       - '4'
       - 'latest'
@@ -41,9 +43,11 @@ versions:
       mongodb:
         gpg: *gpg40
         major: '4.0'
-        version: '4.0.2'
+        version: '4.0.3'
   - dir: '3/debian9/3.6'
     repo: mongodb3
+    templateArgs:
+      os_ver: '9'
     tags:
       - '3.6.8-debian9'
       - '3.6-debian9'
@@ -61,6 +65,8 @@ versions:
         version: '3.6.8'
   - dir: '3/debian8/3.4'
     repo: mongodb3
+    templateArgs:
+      os_ver: '8'
     tags:
       - '3.4.17-debian8'
       - '3.4-debian8'
@@ -75,6 +81,8 @@ versions:
         version: '3.4.17'
   - dir: '3/debian8/3.2'
     repo: mongodb3
+    templateArgs:
+      os_ver: '8'
     tags:
       - '3.2.21-debian8'
       - '3.2-debian8'
