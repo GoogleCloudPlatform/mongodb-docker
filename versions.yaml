@@ -15,22 +15,34 @@
 
 _variables:
   from9: &from9 gcr.io/google-appengine/debian9:latest
-  from8: &from8 gcr.io/google-appengine/debian8:latest
   gosu: &gosu
     version: '1.10'
     gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-  gpg32: &gpg32 42F3E95A2C4F08279C4960ADD68FA50FEA312927
-  gpg34: &gpg34 0C49F3730359A14518585931BC711F9BA15703C6
   gpg36: &gpg36 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+  gpg40: &gpg40 9DA31620334BD75D9DCB49F368818C72E52529D4
 
 versions:
+  - dir: '4/debian9/4.0'
+    repo: mongodb4
+    tags:
+      - '4.0.9-debian9'
+      - '4.0-debian9'
+      - '4.0.9'
+      - '4.0'
+    from: *from9
+    packages:
+      gosu: *gosu
+      mongodb:
+        gpg: *gpg40
+        major: '4.0'
+        version: '4.0.9'
   - dir: '3/debian9/3.6'
     repo: mongodb3
     tags:
-      - '3.6.8-debian9'
+      - '3.6.12-debian9'
       - '3.6-debian9'
       - '3-debian9'
-      - '3.6.8'
+      - '3.6.12'
       - '3.6'
       - '3'
       - 'latest'
@@ -40,35 +52,7 @@ versions:
       mongodb:
         gpg: *gpg36
         major: '3.6'
-        version: '3.6.8'
-  - dir: '3/debian8/3.4'
-    repo: mongodb3
-    tags:
-      - '3.4.17-debian8'
-      - '3.4-debian8'
-      - '3.4.17'
-      - '3.4'
-    from: *from8
-    packages:
-      gosu: *gosu
-      mongodb:
-        gpg: *gpg34
-        major: '3.4'
-        version: '3.4.17'
-  - dir: '3/debian8/3.2'
-    repo: mongodb3
-    tags:
-      - '3.2.21-debian8'
-      - '3.2-debian8'
-      - '3.2.21'
-      - '3.2'
-    from: *from8
-    packages:
-      gosu: *gosu
-      mongodb:
-        gpg: *gpg32
-        major: '3.2'
-        version: '3.2.21'
+        version: '3.6.12'
 
 cloudbuild:
   enable_parallel: true
