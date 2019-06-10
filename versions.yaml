@@ -29,6 +29,8 @@ versions:
       - '4.0-debian9'
       - '4.0.9'
       - '4.0'
+      - '4'
+      - 'latest'
     from: *from9
     packages:
       gosu: *gosu
