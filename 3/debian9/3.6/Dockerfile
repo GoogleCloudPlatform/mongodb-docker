@@ -73,6 +73,8 @@ ENV MONGO_MAJOR 3.6
 ENV MONGO_VERSION 3.6.12
 ENV MONGO_PACKAGE mongodb-org
 
+ENV C2D_RELEASE=${MONGO_VERSION}
+
 RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//;s/).*//') \
 	&& echo "deb http://repo.mongodb.org/apt/debian $DEBIAN_RELASE/mongodb-org/$MONGO_MAJOR main" > /etc/apt/sources.list.d/mongodb-org.list
 
