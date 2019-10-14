@@ -97,7 +97,7 @@ taskGroups:
 
         A common use-case is adding the parameter `--bind_ip_all` to bind the container to all possible IPv4 addresses.
 
-        Check other parameter at [mongod Reference](https://docs.mongodb.com/manual/reference/program/mongod/).
+        Check other parameters at [mongod Reference](https://docs.mongodb.com/manual/reference/program/mongod/).
       run:
         <<: *BaseServerRun
         arguments: ["--storageEngine wiredTiger"]
