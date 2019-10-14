@@ -136,6 +136,10 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 
 You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
 
+A common use-case is adding the parameter `--bind_ip_all` to bind the container to all possible IPv4 addresses.
+
+Check other parameters at [mongod Reference](https://docs.mongodb.com/manual/reference/program/mongod/).
+
 Copy the following content to `pod.yaml` file, and run `kubectl create -f pod.yaml`.
 
 ```yaml
@@ -327,6 +331,10 @@ See the [official docs](http://docs.mongodb.org/manual/) for infomation on using
 ### <a name="using-flags-docker"></a>Using flags
 
 You can specify options directly to `mongod` when starting the instance. For example, you can set `--storageEngine` to `wiredTiger` to enable WiredTiger storage engine.
+
+A common use-case is adding the parameter `--bind_ip_all` to bind the container to all possible IPv4 addresses.
+
+Check other parameters at [mongod Reference](https://docs.mongodb.com/manual/reference/program/mongod/).
 
 Use the following content for the `docker-compose.yml` file, then run `docker-compose up`.
 
