@@ -19,7 +19,7 @@ RUN set -eux \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 # download source code of mongodb
-	&& wget -O /usr/local/src/mongo-r4.0.12.tar.gz https://github.com/mongodb/mongo/archive/r4.0.12.tar.gz \
+	&& wget -O /usr/local/src/mongo-r4.0.13.tar.gz https://github.com/mongodb/mongo/archive/r4.0.13.tar.gz \
 # copy source code
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
@@ -70,7 +70,7 @@ RUN set -ex; \
 	apt-key list
 
 ENV MONGO_MAJOR 4.0
-ENV MONGO_VERSION 4.0.12
+ENV MONGO_VERSION 4.0.13
 ENV MONGO_PACKAGE mongodb-org
 
 ENV C2D_RELEASE=${MONGO_VERSION}
