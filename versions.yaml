@@ -25,9 +25,9 @@ versions:
   - dir: '4/debian9/4.0'
     repo: mongodb4
     tags:
-      - '4.0.12-debian9'
+      - '4.0.13-debian9'
       - '4.0-debian9'
-      - '4.0.12'
+      - '4.0.13'
       - '4.0'
       - '4'
       - 'latest'
@@ -37,7 +37,7 @@ versions:
       mongodb:
         gpg: *gpg40
         major: '4.0'
-        version: '4.0.12'
+        version: '4.0.13'
   - dir: '3/debian9/3.6'
     repo: mongodb3
     tags:
