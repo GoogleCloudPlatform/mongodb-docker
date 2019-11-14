@@ -19,7 +19,7 @@ RUN set -eux \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 # download source code of mongodb
-	&& wget -O /usr/local/src/mongo-r3.6.15.tar.gz https://github.com/mongodb/mongo/archive/r3.6.15.tar.gz \
+	&& wget -O /usr/local/src/mongo-r4.2.1.tar.gz https://github.com/mongodb/mongo/archive/r4.2.1.tar.gz \
 # copy source code
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
@@ -45,7 +45,7 @@ RUN set -eux \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
 
-ENV GPG_KEYS 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+ENV GPG_KEYS E162F504A20CDF15827F718D4B7C549A058F8B6B
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
@@ -69,8 +69,8 @@ RUN set -ex; \
 	rm -r -f "$GNUPGHOME"; \
 	apt-key list
 
-ENV MONGO_MAJOR 3.6
-ENV MONGO_VERSION 3.6.15
+ENV MONGO_MAJOR 4.2
+ENV MONGO_VERSION 4.2.1
 ENV MONGO_PACKAGE mongodb-org
 
 ENV C2D_RELEASE=${MONGO_VERSION}
