@@ -1,4 +1,5 @@
-# Copyright (C) 2017 Google Inc.
+# Copyright 2019 Google LLC
+
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -13,48 +14,46 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-_variables:
-  from9: &from9 gcr.io/google-appengine/debian9:latest
-  gosu: &gosu
-    version: '1.10'
-    gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
-  gpg36: &gpg36 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
-  gpg40: &gpg40 9DA31620334BD75D9DCB49F368818C72E52529D4
-
-versions:
-  - dir: '4/debian9/4.0'
-    repo: mongodb4
-    tags:
-      - '4.0.13-debian9'
-      - '4.0-debian9'
-      - '4.0.13'
-      - '4.0'
-      - '4'
-      - 'latest'
-    from: *from9
-    packages:
-      gosu: *gosu
-      mongodb:
-        gpg: *gpg40
-        major: '4.0'
-        version: '4.0.13'
-  - dir: '3/debian9/3.6'
-    repo: mongodb3
-    tags:
-      - '3.6.14-debian9'
-      - '3.6-debian9'
-      - '3-debian9'
-      - '3.6.14'
-      - '3.6'
-      - '3'
-      - 'latest'
-    from: *from9
-    packages:
-      gosu: *gosu
-      mongodb:
-        gpg: *gpg36
-        major: '3.6'
-        version: '3.6.14'
 
 cloudbuild:
   enable_parallel: true
+versions:
+- dir: 3/debian9/3.6
+  from: gcr.io/google-appengine/debian9
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.10'
+    mongodb:
+      gpg: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
+      major: '3.6'
+      version: 3.6.15
+  repo: mongodb3
+  tags:
+  - 3.6.15-debian9
+  - 3.6-debian9
+  - 3-debian9
+  - 3.6.15
+  - '3.6'
+  - '3'
+  - latest
+- dir: 4/debian9/4.2
+  from: gcr.io/google-appengine/debian9
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.10'
+    mongodb:
+      gpg: E162F504A20CDF15827F718D4B7C549A058F8B6B
+      major: '4.2'
+      version: 4.2.1
+  repo: mongodb4
+  tags:
+  - 4.2.1-debian9
+  - 4.2-debian9
+  - 4-debian9
+  - 4.2.1
+  - '4.2'
+  - '4'
+  - latest
+
