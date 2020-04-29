@@ -45,13 +45,13 @@ versions:
     mongodb:
       gpg: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
       major: '3.6'
-      version: 3.6.17
+      version: 3.6.18
   repo: mongodb3
   tags:
-  - 3.6.17-debian9
+  - 3.6.18-debian9
   - 3.6-debian9
   - 3-debian9
-  - 3.6.17
+  - 3.6.18
   - '3.6'
   - '3'
   - latest
