@@ -18,7 +18,7 @@ cloudbuild:
   enable_parallel: true
 versions:
 - dir: 4/debian9/4.2
-  from: gcr.io/google-appengine/debian9
+  from: marketplace.gcr.io/google/debian9
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
@@ -26,18 +26,18 @@ versions:
     mongodb:
       gpg: E162F504A20CDF15827F718D4B7C549A058F8B6B
       major: '4.2'
-      version: 4.2.6
+      version: 4.2.7
   repo: mongodb4
   tags:
-  - 4.2.6-debian9
+  - 4.2.7-debian9
   - 4.2-debian9
   - 4-debian9
-  - 4.2.6
+  - 4.2.7
   - '4.2'
   - '4'
   - latest
 - dir: 3/debian9/3.6
-  from: gcr.io/google-appengine/debian9
+  from: marketplace.gcr.io/google/debian9
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
