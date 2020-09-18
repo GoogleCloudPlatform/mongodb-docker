@@ -17,23 +17,23 @@
 cloudbuild:
   enable_parallel: true
 versions:
-- dir: 4/debian9/4.2
+- dir: 4/debian9/4.4
   from: marketplace.gcr.io/google/debian9
   packages:
     gosu:
       gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
       version: '1.10'
     mongodb:
-      gpg: E162F504A20CDF15827F718D4B7C549A058F8B6B
-      major: '4.2'
-      version: 4.2.8
+      gpg: 20691EEC35216C63CAF66CE1656408E390CFB1F5
+      major: '4.4'
+      version: 4.4.1
   repo: mongodb4
   tags:
-  - 4.2.8-debian9
-  - 4.2-debian9
+  - 4.4.1-debian9
+  - 4.4-debian9
   - 4-debian9
-  - 4.2.8
-  - '4.2'
+  - 4.4.1
+  - '4.4'
   - '4'
   - latest
 - dir: 3/debian9/3.6
@@ -45,13 +45,13 @@ versions:
     mongodb:
       gpg: 2930ADAE8CAF5059EE73BB4B58712A2291FA4AD5
       major: '3.6'
-      version: 3.6.19
+      version: 3.6.20
   repo: mongodb3
   tags:
-  - 3.6.19-debian9
+  - 3.6.20-debian9
   - 3.6-debian9
   - 3-debian9
-  - 3.6.19
+  - 3.6.20
   - '3.6'
   - '3'
   - latest
