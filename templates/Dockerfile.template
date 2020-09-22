@@ -55,12 +55,15 @@ RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//
 
 RUN set -x \
 	&& apt-get update \
+# starting with MongoDB 4.3, the postinst for server includes "systemctl daemon-reload" (and we don't have "systemctl")
+	&& ln -s /bin/true /usr/local/bin/systemctl \
 	&& apt-get install -y \
 		${MONGO_PACKAGE}=$MONGO_VERSION \
 		${MONGO_PACKAGE}-server=$MONGO_VERSION \
 		${MONGO_PACKAGE}-shell=$MONGO_VERSION \
 		${MONGO_PACKAGE}-mongos=$MONGO_VERSION \
 		${MONGO_PACKAGE}-tools=$MONGO_VERSION \
+	&& rm -f /usr/local/bin/systemctl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/lib/mongodb \
 	&& mv /etc/mongod.conf /etc/mongod.conf.orig
