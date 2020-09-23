@@ -19,7 +19,7 @@ RUN set -eux \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 # download source code of mongodb
-	&& wget -O /usr/local/src/mongo-r3.6.19.tar.gz https://github.com/mongodb/mongo/archive/r3.6.19.tar.gz \
+	&& wget -O /usr/local/src/mongo-r3.6.20.tar.gz https://github.com/mongodb/mongo/archive/r3.6.20.tar.gz \
 # copy source code
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
@@ -70,7 +70,7 @@ RUN set -ex; \
 	apt-key list
 
 ENV MONGO_MAJOR 3.6
-ENV MONGO_VERSION 3.6.19
+ENV MONGO_VERSION 3.6.20
 ENV MONGO_PACKAGE mongodb-org
 
 ENV C2D_RELEASE=${MONGO_VERSION}
@@ -80,12 +80,15 @@ RUN export DEBIAN_RELASE=$(cat /etc/*-release | grep PRETTY_NAME | sed  's/.*(//
 
 RUN set -x \
 	&& apt-get update \
+# starting with MongoDB 4.3, the postinst for server includes "systemctl daemon-reload" (and we don't have "systemctl")
+	&& ln -s /bin/true /usr/local/bin/systemctl \
 	&& apt-get install -y \
 		${MONGO_PACKAGE}=$MONGO_VERSION \
 		${MONGO_PACKAGE}-server=$MONGO_VERSION \
 		${MONGO_PACKAGE}-shell=$MONGO_VERSION \
 		${MONGO_PACKAGE}-mongos=$MONGO_VERSION \
 		${MONGO_PACKAGE}-tools=$MONGO_VERSION \
+	&& rm -f /usr/local/bin/systemctl \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& rm -rf /var/lib/mongodb \
 	&& mv /etc/mongod.conf /etc/mongod.conf.orig
