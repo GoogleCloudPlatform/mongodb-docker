@@ -26,13 +26,13 @@ versions:
     mongodb:
       gpg: 20691EEC35216C63CAF66CE1656408E390CFB1F5
       major: '4.4'
-      version: 4.4.2
+      version: 4.4.3
   repo: mongodb4
   tags:
-  - 4.4.2-debian9
+  - 4.4.3-debian9
   - 4.4-debian9
   - 4-debian9
-  - 4.4.2
+  - 4.4.3
   - '4.4'
   - '4'
   - latest
