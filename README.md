@@ -15,7 +15,7 @@ This is not an official Google product.
 This image contains an installation of MongoDB
 
 For more information, see the
-[Official Image Launcher Page](https://console.cloud.google.com/marketplace/product/google/mongodb4).
+[Official Image Marketplace Page](https://console.cloud.google.com/marketplace/product/google/mongodb4).
 
 Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
 
