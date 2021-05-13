@@ -3,25 +3,32 @@ mongodb-docker
 
 Dockerfile source for mongodb [docker](https://docker.io) image.
 
-# Upstream
+## Upstream
 This source repo was originally copied from:
 https://github.com/docker-library/mongo
 
-# Disclaimer
+## Disclaimer
 This is not an official Google product.
 
-# <a name="about"></a>About
-
+## About
 This image contains an installation of MongoDB
 
 For more information, see the
 [Official Image Marketplace Page](https://console.cloud.google.com/marketplace/product/google/mongodb4).
 
-Pull command (first install [gcloud](https://cloud.google.com/sdk/downloads)):
+### Prerequisites
 
-```shell
-gcloud auth configure-docker && docker -- pull marketplace.gcr.io/google/mongodb4
-```
+    Configure [gcloud](https://cloud.google.com/sdk/gcloud/) as a Docker credential helper:
+
+    ```shell
+    gcloud auth configure-docker
+    ```
+
+### Pull command
+
+    ```shell
+    docker -- pull marketplace.gcr.io/google/mongodb4
+    ```
 
 # <a name="table-of-contents"></a>Table of Contents
 * [Using Kubernetes](#using-kubernetes)
@@ -474,16 +481,4 @@ These are the filesystem paths used by the container image.
 
 | **Path** | **Description** |
 |:---------|:----------------|
-| /data/db | Stores the database files. |
-
-
-Searching 1 file for "marketplace.gcr.io"
-
-<untitled 32>:
-    ERROR: Unable to open file
-
-0 matches
-
-Searching 9 files for "marketplace.gcr.io"
-
-0 matches
+| /data/db | Stores the database files.
