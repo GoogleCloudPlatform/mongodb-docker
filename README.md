@@ -18,7 +18,7 @@ For more information, see the
 
 ### Prerequisites
 
-    Configure [gcloud](https://cloud.google.com/sdk/gcloud/) as a Docker credential helper:
+Configure [gcloud](https://cloud.google.com/sdk/gcloud/) as a Docker credential helper:
 
 ```shell
 gcloud auth configure-docker
