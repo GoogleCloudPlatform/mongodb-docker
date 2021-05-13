@@ -20,15 +20,15 @@ For more information, see the
 
     Configure [gcloud](https://cloud.google.com/sdk/gcloud/) as a Docker credential helper:
 
-    ```shell
+```shell
     gcloud auth configure-docker
-    ```
+```
 
 ### Pull command
 
-    ```shell
+```shell
     docker -- pull marketplace.gcr.io/google/mongodb4
-    ```
+```
 
 # <a name="table-of-contents"></a>Table of Contents
 * [Using Kubernetes](#using-kubernetes)
