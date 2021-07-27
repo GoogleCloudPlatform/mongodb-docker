@@ -35,4 +35,22 @@ versions:
   - 4.4.5
   - '4.4'
   - '4'
-  - latest
+- dir: 5/debian9/5.0
+  from: marketplace.gcr.io/google/debian9
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.12'
+    mongodb:
+      gpg: F5679A222C647C87527C2F8CB00A0BD1E2C63C11
+      major: '5.0'
+      version: 5.0.1
+  repo: mongodb4
+  tags:
+  - 5.0.1-debian9
+  - 5.0-debian9
+  - 5-debian9
+  - 5.0.1
+  - '5.0'
+  - '5'
+  - latest 
