@@ -45,7 +45,7 @@ versions:
       gpg: F5679A222C647C87527C2F8CB00A0BD1E2C63C11
       major: '5.0'
       version: 5.0.1
-  repo: mongodb4
+  repo: mongodb5
   tags:
   - 5.0.1-debian9
   - 5.0-debian9
