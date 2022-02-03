@@ -19,7 +19,7 @@ RUN set -eux \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 # download source code of mongodb
-	&& wget -O /usr/local/src/mongo-r5.0.1.tar.gz https://github.com/mongodb/mongo/archive/r5.0.1.tar.gz \
+	&& wget -O /usr/local/src/mongo-r5.0.6.tar.gz https://github.com/mongodb/mongo/archive/r5.0.6.tar.gz \
 # copy source code
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
@@ -70,7 +70,7 @@ RUN set -ex; \
 	apt-key list
 
 ENV MONGO_MAJOR 5.0
-ENV MONGO_VERSION 5.0.1
+ENV MONGO_VERSION 5.0.6
 ENV MONGO_PACKAGE mongodb-org
 
 ENV C2D_RELEASE=${MONGO_VERSION}
