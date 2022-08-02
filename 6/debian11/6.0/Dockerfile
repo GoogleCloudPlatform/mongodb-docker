@@ -1,4 +1,4 @@
-FROM marketplace.gcr.io/google/debian9
+FROM marketplace.gcr.io/google/debian11
 
 # add our user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 RUN groupadd -r mongodb && useradd -r -g mongodb mongodb
@@ -19,7 +19,7 @@ RUN set -eux \
 	&& wget -q -O /usr/local/bin/gosu "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture)" \
 	&& wget -q -O /usr/local/bin/gosu.asc "https://github.com/tianon/gosu/releases/download/$GOSU_VERSION/gosu-$(dpkg --print-architecture).asc" \
 # download source code of mongodb
-	&& wget -O /usr/local/src/mongo-r5.0.10.tar.gz https://github.com/mongodb/mongo/archive/r5.0.10.tar.gz \
+	&& wget -O /usr/local/src/mongo-r6.0.0.tar.gz https://github.com/mongodb/mongo/archive/r6.0.0.tar.gz \
 # copy source code
 	&& wget -q -O /usr/local/src/gosu.tar.gz "https://github.com/tianon/gosu/archive/$GOSU_VERSION.tar.gz" \
 # extract gosu binary and check signature
@@ -45,7 +45,7 @@ RUN set -eux \
 	&& gosu nobody true \
 	&& apt-get purge -y --auto-remove ca-certificates wget
 
-ENV GPG_KEYS F5679A222C647C87527C2F8CB00A0BD1E2C63C11
+ENV GPG_KEYS 39BD841E4BE5FB195A65400E6A26B1AE64C3C388
 RUN set -ex; \
 	export GNUPGHOME="$(mktemp -d)"; \
 	for key in $GPG_KEYS; do \
@@ -69,8 +69,8 @@ RUN set -ex; \
 	rm -r -f "$GNUPGHOME"; \
 	apt-key list
 
-ENV MONGO_MAJOR 5.0
-ENV MONGO_VERSION 5.0.10
+ENV MONGO_MAJOR 6.0
+ENV MONGO_VERSION 6.0.0
 ENV MONGO_PACKAGE mongodb-org
 
 ENV C2D_RELEASE=${MONGO_VERSION}
