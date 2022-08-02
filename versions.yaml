@@ -37,7 +37,7 @@ versions:
   - '4'
   - latest
   excludeTests:
-  - tests/functional_tests/db_connection_test_6.yaml
+  - tests/functional_tests/db6_connection_test.yaml
 - dir: 5/debian9/5.0
   from: marketplace.gcr.io/google/debian9
   packages:
@@ -58,7 +58,7 @@ versions:
   - '5'
   - latest
   excludeTests:
-  - tests/functional_tests/db_connection_test_6.yaml
+  - tests/functional_tests/db6_connection_test.yaml
 - dir: 6/debian11/6.0
   from: marketplace.gcr.io/google/debian11
   packages:
