@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Affero General Public License as
@@ -35,7 +35,9 @@ versions:
   - 4.4.5
   - '4.4'
   - '4'
-  - latest 
+  - latest
+  excludeTests:
+  - tests/functional_tests/db6_connection_test.yaml
 - dir: 5/debian9/5.0
   from: marketplace.gcr.io/google/debian9
   packages:
@@ -45,13 +47,36 @@ versions:
     mongodb:
       gpg: F5679A222C647C87527C2F8CB00A0BD1E2C63C11
       major: '5.0'
-      version: 5.0.6
+      version: 5.0.10
   repo: mongodb5
   tags:
-  - 5.0.6-debian9
+  - 5.0.10-debian9
   - 5.0-debian9
   - 5-debian9
-  - 5.0.6
+  - 5.0.10
   - '5.0'
   - '5'
-  - latest 
+  - latest
+  excludeTests:
+  - tests/functional_tests/db6_connection_test.yaml
+- dir: 6/debian11/6.0
+  from: marketplace.gcr.io/google/debian11
+  packages:
+    gosu:
+      gpg: B42F6819007F00F88E364FD4036A9C25BF357DD4
+      version: '1.12'
+    mongodb:
+      gpg: 39BD841E4BE5FB195A65400E6A26B1AE64C3C388
+      major: '6.0'
+      version: 6.0.0
+  repo: mongodb6
+  tags:
+  - 6.0.0-debian11
+  - 6.0-debian11
+  - 5-debian11
+  - 6.0.0
+  - '6.0'
+  - '6'
+  - latest
+  excludeTests:
+  - tests/functional_tests/db_connection_test.yaml
